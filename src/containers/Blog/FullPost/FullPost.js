@@ -5,17 +5,22 @@ import "./FullPost.css";
 
 class FullPost extends Component {
   state = { fullPost: null };
+
+  deleteHandler = () => {
+    baseService
+      .delete(`/posts/${this.state.fullPost.id}`)
+      .then(resp => console.log(resp));
+  };
+
   componentDidUpdate() {
     if (this.props.id) {
       if (
         !this.state.fullPost ||
         (this.state.fullPost && this.state.fullPost.id !== this.props.id)
       ) {
-        axios
-          .get(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
-          .then(({ data }) => {
-            this.setState({ fullPost: data });
-          });
+        axios.get(`/posts/${this.props.id}`).then(({ data }) => {
+          this.setState({ fullPost: data });
+        });
       }
     }
   }
@@ -30,7 +35,7 @@ class FullPost extends Component {
           <h1>{this.state.fullPost.title}</h1>
           <p>{this.state.fullPost.body}</p>
           <div className="Edit">
-            <button className="Delete" onClick={this.props.delete}>
+            <button className="Delete" onClick={this.deleteHandler}>
               Delete
             </button>
           </div>
