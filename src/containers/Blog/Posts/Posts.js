@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import baseService from "axios";
 import Post from "../../../components/Post/Post";
 import "./Posts.css";
-
+import { Link, Route } from "react-router-dom";
+import FullPost from "../FullPost/FullPost";
 class Posts extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     posts: []
   };
@@ -24,14 +29,21 @@ class Posts extends Component {
 
   render() {
     const posts = this.state.posts.map(post => (
-      <Post
-        title={post.title}
-        key={post.id}
-        author={post.author}
-        clicked={() => this.postSelectedHandler(post.id)}
-      />
+      <Link key={post.id} to={`/${this.props.match.url}/${post.id}`}>
+        <Post
+          title={post.title}
+          key={post.id}
+          author={post.author}
+          //clicked={() => this.postSelectedHandler(post.id)}
+        />
+      </Link>
     ));
-    return <section className="Posts">{posts}</section>;
+    return (
+      <div>
+        <section className="Posts">{posts}</section>
+        <Route path="/:id" exact component={FullPost} />
+      </div>
+    );
   }
 }
 

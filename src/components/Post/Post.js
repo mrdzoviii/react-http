@@ -15,7 +15,6 @@ const post = props => (
 post.propTypes = {
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
-  clicked: PropTypes.func.isRequired
 };
 
 export default post;

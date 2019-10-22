@@ -6,19 +6,25 @@ import "./FullPost.css";
 class FullPost extends Component {
   state = { fullPost: null };
 
+  constructor(props) {
+    super(props);
+    console.log("Constructor FULL post");
+  }
+
   deleteHandler = () => {
-    baseService
+    axios
       .delete(`/posts/${this.state.fullPost.id}`)
       .then(resp => console.log(resp));
   };
 
   componentDidUpdate() {
-    if (this.props.id) {
+    console.log(this.props);
+    if (this.props.match.params.id) {
       if (
         !this.state.fullPost ||
-        (this.state.fullPost && this.state.fullPost.id !== this.props.id)
+        (this.state.fullPost && this.state.fullPost.id.toString() !== this.props.match.params.id)
       ) {
-        axios.get(`/posts/${this.props.id}`).then(({ data }) => {
+        axios.get(`/posts/${this.props.match.params.id}`).then(({ data }) => {
           this.setState({ fullPost: data });
         });
       }

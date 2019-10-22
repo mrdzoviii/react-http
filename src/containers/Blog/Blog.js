@@ -1,25 +1,58 @@
 import React, { Component } from "react";
 import Posts from "./Posts/Posts";
-
+//import NewPost from "./NewPost/NewPost";
+import { Switch, Route, NavLink ,Redirect} from "react-router-dom";
 import "./Blog.css";
+import asyncComponent from "../../hoc/asyncComponent";
+
+
+const AsyncNewPost = asyncComponent(()=>{
+    return import('./NewPost/NewPost')
+});
+
 
 class Blog extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  state={
+    auth: true
+  };
+
   render() {
+      console.log('render');
+      console.log(this.props);
+      /*if(this.props.name)
+          return <div>{this.props.name}</div>;
+    */
     return (
       <div className="Blog">
         <header>
           <nav>
             <ul>
               <li>
-                <a href="/">Home</a>
+                <NavLink to="/posts" exact activeClassName="active">
+                  Home
+                </NavLink>
               </li>
               <li>
-                <a href="/new-post">New post</a>
+                <NavLink to={{
+                    pathname: "/new-post",
+                    hash: "#submit",
+                    search: "?quick-submit=true"
+                  }} >
+                  New post
+                </NavLink>
               </li>
             </ul>
           </nav>
         </header>
-        <Posts />
+        <Switch>
+            {this.state.auth ? <Route path="/new-post" component={AsyncNewPost} /> : null }
+            <Route path="/posts" component={Posts} />
+            <Redirect from='/' to='/posts'></Redirect>
+        </Switch>
       </div>
     );
   }
