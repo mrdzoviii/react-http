@@ -13,9 +13,11 @@ class Posts extends Component {
     posts: []
   };
 
+  /*
   postSelectedHandler = id => {
     this.setState({ selectedID: id });
   };
+   */
 
   componentDidMount() {
     baseService.get("/posts").then(resp => {
@@ -29,7 +31,7 @@ class Posts extends Component {
 
   render() {
     const posts = this.state.posts.map(post => (
-      <Link key={post.id} to={`/${this.props.match.url}/${post.id}`}>
+      <Link key={post.id} to={`/${post.id}`}>
         <Post
           title={post.title}
           key={post.id}

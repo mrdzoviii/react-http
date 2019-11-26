@@ -17,18 +17,25 @@ class FullPost extends Component {
       .then(resp => console.log(resp));
   };
 
-  componentDidUpdate() {
-    console.log(this.props);
+  componentDidMount() {
+    this.handleComponent();
+  }
+
+  handleComponent(){
     if (this.props.match.params.id) {
       if (
-        !this.state.fullPost ||
-        (this.state.fullPost && this.state.fullPost.id.toString() !== this.props.match.params.id)
+          !this.state.fullPost ||
+          (this.state.fullPost && this.state.fullPost.id.toString() !== this.props.match.params.id)
       ) {
         axios.get(`/posts/${this.props.match.params.id}`).then(({ data }) => {
           this.setState({ fullPost: data });
         });
       }
     }
+  }
+
+  componentDidUpdate() {
+    this.handleComponent();
   }
   render() {
     let post = <p style={{ textAlign: "center" }}>Please select a Post!</p>;

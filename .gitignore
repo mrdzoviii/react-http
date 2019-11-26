@@ -63,3 +63,4 @@ typings/
 /.idea/modules.xml
 /.idea/react-http.iml
 /.idea/vcs.xml
+/build/

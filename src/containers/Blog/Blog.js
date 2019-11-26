@@ -32,7 +32,7 @@ class Blog extends Component {
           <nav>
             <ul>
               <li>
-                <NavLink to="/posts" exact activeClassName="active">
+                <NavLink to="/" exact activeClassName="active">
                   Home
                 </NavLink>
               </li>
@@ -50,8 +50,7 @@ class Blog extends Component {
         </header>
         <Switch>
             {this.state.auth ? <Route path="/new-post" component={AsyncNewPost} /> : null }
-            <Route path="/posts" component={Posts} />
-            <Redirect from='/' to='/posts'></Redirect>
+            <Route path="/" component={Posts} />
         </Switch>
       </div>
     );
